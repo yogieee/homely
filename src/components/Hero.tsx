@@ -45,6 +45,11 @@ export default function Hero() {
         className="relative z-10 w-full max-w-3xl mx-auto px-5 sm:px-8 pt-32 pb-20 flex flex-col items-center text-center"
       >
         <motion.div variants={item} className="relative w-28 h-40 sm:w-32 sm:h-[11.5rem]">
+          <div aria-hidden="true" className="pointer-events-none absolute inset-0">
+            {[0, 1, 2].map((i) => (
+              <span key={i} className="logo-ripple" style={{ animationDelay: `${i * 1.3}s` }} />
+            ))}
+          </div>
           <Image src="/brand/logo-emblem.png" alt="Homely emblem" fill loading="eager" sizes="128px" className="object-contain" />
         </motion.div>
 

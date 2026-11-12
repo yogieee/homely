@@ -10,6 +10,7 @@ import Footer from "@/components/Footer";
 import TableBookingModal from "@/components/TableBookingModal";
 import Preloader from "@/components/Preloader";
 import MusicToggle from "@/components/MusicToggle";
+import CursorRipple from "@/components/CursorRipple";
 
 export default function Home() {
   return (
@@ -27,6 +28,7 @@ export default function Home() {
       <Footer />
       <TableBookingModal />
       <MusicToggle />
+      <CursorRipple />
     </BookingProvider>
   );
 }

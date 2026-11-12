@@ -37,6 +37,48 @@ body {
   cursor: -webkit-image-set(url("/brand/cursor-h.png") 1x, url("/brand/cursor-h@2x.png") 2x) 16 16, auto;
 }
 
+/* Soft rings around the cursor when the mouse rests */
+.cursor-ripple {
+  position: absolute;
+  left: -36px;
+  top: -36px;
+  width: 72px;
+  height: 72px;
+  border-radius: 9999px;
+  border: 1.5px solid rgba(176, 138, 94, 0.55);
+  box-shadow: 0 0 12px rgba(176, 138, 94, 0.25);
+  opacity: 0;
+  transform: scale(0.2);
+  animation: cursor-ripple 2.7s cubic-bezier(0.22, 0.61, 0.36, 1) infinite;
+}
+
+@keyframes cursor-ripple {
+  0% { transform: scale(0.2); opacity: 0; }
+  15% { opacity: 0.9; }
+  100% { transform: scale(1); opacity: 0; }
+}
+
+/* Emblem-shaped rings rippling out from behind the hero emblem */
+.logo-ripple {
+  position: absolute;
+  inset: -4%;
+  background: url("/brand/emblem-outline.png") center / 100% 100% no-repeat;
+  opacity: 0;
+  animation: logo-ripple 3.9s cubic-bezier(0.22, 0.61, 0.36, 1) infinite;
+}
+
+@keyframes logo-ripple {
+  0% { transform: scale(1); opacity: 0; }
+  15% { opacity: 0.3; }
+  100% { transform: scale(2.1); opacity: 0; }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .logo-ripple {
+    display: none;
+  }
+}
+
 /* Back to the normal cursor while clicking */
 html:active body {
   cursor: auto;
