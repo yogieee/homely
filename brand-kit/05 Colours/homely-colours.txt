@@ -1,0 +1,17 @@
+HOMELY BRAND COLOURS
+
+Main colours
+  Mahogany        #432B26   RGB 67 43 38      Main brand colour: backgrounds, buttons, logo ink
+  Ivory Linen     #FAF3E8   RGB 250 243 232   Page and print background
+  Antique Bronze  #B08A5E   RGB 176 138 94    Highlights, fine lines, kolam motifs
+  Saffron Rust    #9A4E36   RGB 154 78 54     Accent for labels and small headings
+
+Supporting colours
+  Clay Rose       #7C4C40   RGB 124 76 64     Softer mahogany for hover states and panels
+  Parchment       #F5E4CD   RGB 245 228 205   Emblem fill, text on dark backgrounds
+  Light Bronze    #D1B088   RGB 209 176 136   Details on dark backgrounds
+  Cocoa Ink       #2E1C18   RGB 46 28 24      Body text
+
+Fonts (free from Google Fonts)
+  Playfair Display   headings and the HOMELY wordmark
+  Plus Jakarta Sans  body text and the "South Indian Fine Dining" tagline
