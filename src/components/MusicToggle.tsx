@@ -3,6 +3,7 @@
 import { useEffect, useRef, useState } from "react";
 import { motion } from "framer-motion";
 import { VolumeX } from "lucide-react";
+import { VIDEO_SOUND_EVENT } from "./StoryVideo";
 
 const STORAGE_KEY = "homely-music-muted";
 const TARGET_VOLUME = 0.35;
@@ -79,6 +80,26 @@ export default function MusicToggle() {
       events.forEach((e) => window.removeEventListener(e, start));
       if (fadeRef.current) window.clearInterval(fadeRef.current);
     };
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, []);
+
+  // Step aside while the story video plays with sound, then come back
+  useEffect(() => {
+    let resume = false;
+    const onVideoSound = (e: Event) => {
+      const on = (e as CustomEvent<boolean>).detail;
+      const audio = audioRef.current;
+      if (!audio) return;
+      if (on && !audio.paused) {
+        resume = true;
+        pause();
+      } else if (!on && resume) {
+        resume = false;
+        play();
+      }
+    };
+    window.addEventListener(VIDEO_SOUND_EVENT, onVideoSound);
+    return () => window.removeEventListener(VIDEO_SOUND_EVENT, onVideoSound);
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
 

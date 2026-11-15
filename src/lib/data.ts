@@ -6,6 +6,7 @@ export type NavLink = {
 export const NAV_LINKS: NavLink[] = [
   { label: "Offers", href: "#offers" },
   { label: "Our Story", href: "#our-story" },
+  { label: "Gallery", href: "#gallery" },
   { label: "Four States", href: "#four-states" },
   { label: "Menu", href: "#menu" },
   { label: "Event Hall", href: "#event-hall" },
@@ -30,8 +31,8 @@ export const OFFERS: Offer[] = [
     eyebrow: "Ma's Flavours Is Now",
     title: "Homely Has Opened",
     subtitle: "The same family recipes in a brand-new fine dining home on Walsgrave Road.",
-    image: "/images/offer-now-open.jpg",
-    alt: "A restaurant doorway decorated with a marigold toran and brass lamps for its opening",
+    image: "/images/homely-opened.jpg",
+    alt: "The Homely restaurant on Walsgrave Road at night, its sign and windows lit up",
     cta: { label: "Read Our Story", href: "#our-story" },
   },
   {
@@ -39,8 +40,8 @@ export const OFFERS: Offer[] = [
     eyebrow: "Private Events",
     title: "Celebrate Upstairs",
     subtitle: "Birthdays, naming ceremonies and family milestones in our private event hall.",
-    image: "/images/offer-private-events.jpg",
-    alt: "A celebration table with a candle-lit cake, marigold petals and brass thalis",
+    image: "/images/homely-upstairs.jpg",
+    alt: "Families gathered for a celebration in the Homely upstairs event hall, with red seating and fairy lights",
     cta: { label: "Enquire Now", href: "#event-hall" },
   },
   {
@@ -48,8 +49,8 @@ export const OFFERS: Offer[] = [
     eyebrow: "Order Online",
     title: "Homely at Home",
     subtitle: "Dosas, biryanis and curries delivered fresh to your door through Foodhub.",
-    image: "/images/offer-delivery.jpg",
-    alt: "A South Indian takeaway of biryani, dosa and curries unpacked on a home dining table",
+    image: "/images/homely-at-home.jpg",
+    alt: "A sizzling platter of tandoori chicken, fish and kebabs on a wooden board, steam rising",
     cta: { label: "Order on Foodhub", href: FOODHUB_URL, external: true },
   },
 ];

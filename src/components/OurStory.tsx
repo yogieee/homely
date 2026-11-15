@@ -1,11 +1,11 @@
 "use client";
 
-import Image from "next/image";
 import { motion } from "framer-motion";
 import { Store, Sparkles, UtensilsCrossed } from "lucide-react";
 import SectionHeading from "./SectionHeading";
 import OrnateFrame from "./OrnateFrame";
 import SideKolam from "./SideKolam";
+import StoryVideo from "./StoryVideo";
 
 const PILLARS = [
   {
@@ -29,26 +29,16 @@ export default function OurStory() {
   return (
     <section id="our-story" className="relative bg-ivory py-24 sm:py-32 overflow-hidden">
       <SideKolam />
-      <div className="relative max-w-7xl mx-auto px-5 sm:px-8 grid lg:grid-cols-[1.15fr_1fr] gap-12 lg:gap-16 items-stretch">
+      <div className="relative max-w-[88rem] mx-auto px-5 sm:px-8 xl:px-14 grid lg:grid-cols-[1.75fr_1fr] gap-12 lg:gap-12 xl:gap-14 items-center">
         <motion.div
           initial={{ opacity: 0, x: -24 }}
           whileInView={{ opacity: 1, x: 0 }}
           viewport={{ once: true }}
           transition={{ duration: 0.7 }}
-          className="relative h-80 sm:h-96 lg:h-auto lg:min-h-[30rem] rounded-md overflow-hidden border border-brass/30 order-2 lg:order-1 p-3"
+          className="relative aspect-video w-full rounded-md overflow-hidden border border-brass/30 order-2 lg:order-1 p-3"
         >
           <div className="relative w-full h-full rounded-md overflow-hidden">
-            <Image
-              src="/images/homely-dining-room-v2.jpg"
-              alt="The Homely fine dining room, with carved wooden arches, brass lamps, brass tumblers and banana-leaf place settings"
-              fill
-              sizes="(min-width: 1024px) 55vw, 100vw"
-              className="object-cover"
-            />
-            <div className="absolute inset-0 bg-gradient-to-t from-banana/50 via-transparent to-transparent" />
-            <span className="absolute bottom-4 left-4 px-4 py-2 rounded-full bg-banana/45 backdrop-blur-md border border-parchment/25 shadow-[0_4px_20px_rgba(0,0,0,0.3),inset_0_1px_0_rgba(255,255,255,0.12)] text-[11px] sm:text-xs tracking-[0.25em] uppercase text-parchment">
-              Our New Home · Homely Fine Dining
-            </span>
+            <StoryVideo />
           </div>
           <OrnateFrame tone="brass" />
         </motion.div>
@@ -63,7 +53,7 @@ export default function OurStory() {
         </div>
       </div>
 
-      <div className="relative isolate max-w-7xl mx-auto px-5 sm:px-8 mt-14 lg:mt-20">
+      <div className="relative isolate max-w-[88rem] mx-auto px-5 sm:px-8 xl:px-14 mt-14 lg:mt-20">
         <div aria-hidden="true" className="absolute -z-10 -top-6 -left-8 w-56 h-56 rounded-full bg-terracotta/25 blur-3xl" />
         <div aria-hidden="true" className="absolute -z-10 -bottom-8 right-0 w-64 h-64 rounded-full bg-brass/35 blur-3xl" />
         <div aria-hidden="true" className="absolute -z-10 top-1/3 left-1/2 w-40 h-40 rounded-full bg-banana-light/20 blur-3xl" />

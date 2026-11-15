@@ -4,6 +4,7 @@ import Hero from "@/components/Hero";
 import EventsOffers from "@/components/EventsOffers";
 import OurStory from "@/components/OurStory";
 import CultureJourney from "@/components/CultureJourney";
+import GallerySection from "@/components/GallerySection";
 import MenuSection from "@/components/MenuSection";
 import EventHallSection from "@/components/EventHallSection";
 import Footer from "@/components/Footer";
@@ -21,6 +22,7 @@ export default function Home() {
         <Hero />
         <EventsOffers />
         <OurStory />
+        <GallerySection />
         <CultureJourney />
         <MenuSection />
         <EventHallSection />
