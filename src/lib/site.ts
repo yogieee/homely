@@ -58,8 +58,8 @@ export const RESTAURANT_JSON_LD = {
   openingHoursSpecification: [
     {
       "@type": "OpeningHoursSpecification",
-      dayOfWeek: ["Monday", "Tuesday", "Wednesday", "Thursday", "Friday", "Saturday", "Sunday"],
-      opens: "12:00",
+      dayOfWeek: ["Tuesday", "Wednesday", "Thursday", "Friday", "Saturday", "Sunday"],
+      opens: "08:00",
       closes: "23:00",
     },
   ],

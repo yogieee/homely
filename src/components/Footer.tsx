@@ -7,7 +7,8 @@ import { useBooking } from "@/lib/booking-context";
 import SocialLinks from "./SocialLinks";
 
 const HOURS = [
-  { day: "Every day", time: "12 noon to 11 PM" },
+  { day: "Tuesday to Sunday", time: "8 AM to 11 PM" },
+  { day: "Monday", time: "Closed" },
   { day: "Tandoori, roti and naans", time: "From 5 PM" },
 ];
 

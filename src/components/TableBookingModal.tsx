@@ -10,6 +10,14 @@ type Step = 1 | 2 | 3 | 4;
 
 const PARTY_SIZES = [2, 3, 4, 5, 6, 8, 10, 12];
 
+/** Homely is closed on Mondays. */
+const isMonday = (iso: string) => !!iso && new Date(`${iso}T12:00:00`).getDay() === 1;
+
+const todayIso = () => {
+  const d = new Date();
+  return `${d.getFullYear()}-${String(d.getMonth() + 1).padStart(2, "0")}-${String(d.getDate()).padStart(2, "0")}`;
+};
+
 export default function TableBookingModal() {
   const { isOpen, closeBooking } = useBooking();
   const [step, setStep] = useState<Step>(1);
@@ -151,9 +159,19 @@ export default function TableBookingModal() {
                         <input
                           type="date"
                           value={date}
+                          min={todayIso()}
                           onChange={(e) => setDate(e.target.value)}
-                          className="w-full px-4 py-3 rounded-xl bg-parchment/5 border border-parchment/15 text-parchment text-sm focus:outline-none focus:ring-2 focus:ring-brass/50"
+                          className={`w-full px-4 py-3 rounded-xl bg-parchment/5 border text-parchment text-sm focus:outline-none focus:ring-2 focus:ring-brass/50 ${
+                            isMonday(date) ? "border-terracotta" : "border-parchment/15"
+                          }`}
                         />
+                        {isMonday(date) ? (
+                          <span role="alert" className="text-terracotta text-xs">
+                            We&apos;re closed on Mondays. Please pick another day.
+                          </span>
+                        ) : (
+                          <span className="text-parchment/50 text-xs">Open Tuesday to Sunday, 8 AM to 11 PM</span>
+                        )}
                       </label>
                       <div>
                         <span className="text-sm text-parchment/70 mb-2 block">Time</span>
@@ -174,7 +192,7 @@ export default function TableBookingModal() {
                         </div>
                       </div>
                       <button
-                        disabled={!date || !time}
+                        disabled={!date || !time || isMonday(date)}
                         onClick={() => setStep(3)}
                         className="mt-2 w-full px-6 py-3.5 rounded-full bg-brass text-banana font-semibold tracking-wide disabled:opacity-40 disabled:cursor-not-allowed hover:bg-brass-light transition-colors"
                       >

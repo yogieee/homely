@@ -145,7 +145,16 @@ export const CATERING_STYLES = [
   "Plated Menu",
 ] as const;
 
+// Tuesday to Sunday, 8 AM to 11 PM. Last table at 21:30.
 export const RESERVATION_TIMES = [
+  "08:00",
+  "08:30",
+  "09:00",
+  "09:30",
+  "10:00",
+  "10:30",
+  "11:00",
+  "11:30",
   "12:00",
   "12:30",
   "13:00",
