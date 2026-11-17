@@ -38,13 +38,16 @@ export async function POST(request: Request) {
     ]),
   });
 
-  if (!res.ok) {
-    console.error("Resend error", res.status, await res.text());
+  const result = (await res.json().catch(() => null)) as { data?: { id: string }[] } | null;
+  const ids = result?.data?.map((d) => d.id) ?? [];
+  if (!res.ok || ids.length !== 2) {
+    console.error("Resend error", res.status, JSON.stringify(result));
     return Response.json(
       { error: "We couldn't send your enquiry. Please try again or email events@homelydining.co.uk." },
       { status: 502 },
     );
   }
 
+  console.log("Event enquiry sent", ids.join(", "));
   return Response.json({ ok: true });
 }
