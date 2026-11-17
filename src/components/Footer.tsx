@@ -1,8 +1,17 @@
 "use client";
 
 import Image from "next/image";
-import { MapPin, Phone, Mail, Clock, Navigation } from "lucide-react";
-import { ADDRESS, FOODHUB_URL, MAPS_EMBED, MAPS_LINK, NAV_LINKS } from "@/lib/data";
+import { MapPin, Phone, Mail, Clock, Navigation, MessageCircle } from "lucide-react";
+import {
+  ADDRESS,
+  FOODHUB_URL,
+  MAPS_EMBED,
+  MAPS_LINK,
+  NAV_LINKS,
+  PHONE_DISPLAY,
+  PHONE_TEL,
+  WHATSAPP_URL,
+} from "@/lib/data";
 import { useBooking } from "@/lib/booking-context";
 import SocialLinks from "./SocialLinks";
 
@@ -47,8 +56,14 @@ export default function Footer() {
           </div>
           <div className="flex items-center gap-3 text-parchment/70 text-sm lg:text-[15px]">
             <Phone size={18} className="shrink-0 text-brass-light" />
-            <a href="tel:+442476001234" className="hover:text-brass-light transition-colors">
-              +44 24 7600 1234
+            <a href={`tel:${PHONE_TEL}`} className="hover:text-brass-light transition-colors">
+              {PHONE_DISPLAY}
+            </a>
+          </div>
+          <div className="flex items-center gap-3 text-parchment/70 text-sm lg:text-[15px]">
+            <MessageCircle size={18} className="shrink-0 text-brass-light" />
+            <a href={WHATSAPP_URL} target="_blank" rel="noopener noreferrer" className="hover:text-brass-light transition-colors">
+              WhatsApp us
             </a>
           </div>
           <div className="flex items-center gap-3 text-parchment/70 text-sm lg:text-[15px]">

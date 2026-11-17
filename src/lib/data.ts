@@ -55,11 +55,16 @@ export const OFFERS: Offer[] = [
   },
 ];
 
-export type SocialPlatform = "facebook" | "instagram" | "tiktok" | "trustpilot";
+export const PHONE_DISPLAY = "07305 154989";
+export const PHONE_TEL = "+447305154989";
+export const WHATSAPP_URL = "https://wa.me/447305154989";
+export const INSTAGRAM_URL = "https://www.instagram.com/homelydining";
+
+export type SocialPlatform ="facebook" | "instagram" | "tiktok" | "trustpilot";
 
 export const SOCIAL_LINKS: { platform: SocialPlatform; label: string; href: string }[] = [
   { platform: "facebook", label: "Facebook", href: "https://www.facebook.com/" },
-  { platform: "instagram", label: "Instagram", href: "https://www.instagram.com/" },
+  { platform: "instagram", label: "Instagram", href: INSTAGRAM_URL },
   { platform: "tiktok", label: "TikTok", href: "https://www.tiktok.com/" },
   { platform: "trustpilot", label: "Trustpilot", href: "https://uk.trustpilot.com/" },
 ];

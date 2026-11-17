@@ -1,4 +1,4 @@
-import { ADDRESS, MAPS_LINK } from "@/lib/data";
+import { ADDRESS, INSTAGRAM_URL, MAPS_LINK } from "@/lib/data";
 import { MENU_TABS } from "@/lib/menu";
 
 export const SITE_URL = "https://www.homelydining.co.uk";
@@ -19,6 +19,8 @@ export const RESTAURANT_JSON_LD = {
   image: [`${SITE_URL}/brand/homely-share.jpg`, `${SITE_URL}/images/homely-opened.jpg`],
   logo: `${SITE_URL}/brand/logo-emblem.png`,
   email: "hello@homelydining.co.uk",
+  telephone: "+44 7305 154989",
+  sameAs: [INSTAGRAM_URL],
   address: {
     "@type": "PostalAddress",
     streetAddress: "135 Walsgrave Road",
