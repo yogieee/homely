@@ -53,6 +53,9 @@ export default function EventHallSection() {
   const [form, setForm] = useState<FormState>(initialState);
   const [errors, setErrors] = useState<Partial<Record<keyof FormState, string>>>({});
   const [submitted, setSubmitted] = useState(false);
+  const [sending, setSending] = useState(false);
+  const [sendError, setSendError] = useState("");
+  const [company, setCompany] = useState("");
 
   const validate = (): boolean => {
     const nextErrors: Partial<Record<keyof FormState, string>> = {};
@@ -64,15 +67,35 @@ export default function EventHallSection() {
     return Object.keys(nextErrors).length === 0;
   };
 
-  const handleSubmit = (e: FormEvent) => {
+  const handleSubmit = async (e: FormEvent) => {
     e.preventDefault();
-    if (!validate()) return;
-    setSubmitted(true);
+    if (sending || !validate()) return;
+    setSending(true);
+    setSendError("");
+    try {
+      const res = await fetch("/api/event-enquiry", {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({ ...form, company }),
+      });
+      const data = (await res.json().catch(() => ({}))) as { error?: string };
+      if (!res.ok) throw new Error(data.error || "Something went wrong. Please try again.");
+      setSubmitted(true);
+    } catch (err) {
+      setSendError(
+        err instanceof Error && err.message !== "Failed to fetch"
+          ? err.message
+          : "We couldn't reach our server. Please check your connection and try again.",
+      );
+    } finally {
+      setSending(false);
+    }
   };
 
   const handleReset = () => {
     setForm(initialState);
     setErrors({});
+    setSendError("");
     setSubmitted(false);
   };
 
@@ -152,7 +175,7 @@ export default function EventHallSection() {
                   <p className="text-parchment/70 max-w-sm">
                     Thanks, {form.fullName.split(" ")[0] || "friend"}! We&apos;ve got your enquiry. Someone from our team
                     will be in touch within 24 hours to plan your {form.occasion.toLowerCase()} for{" "}
-                    {form.guestCount} guests.
+                    {form.guestCount} guests. We&apos;ve also sent a copy to {form.email}.
                   </p>
                   <button
                     onClick={handleReset}
@@ -276,11 +299,31 @@ export default function EventHallSection() {
                     />
                   </Field>
 
+                  <div aria-hidden="true" className="absolute -left-[9999px] w-px h-px overflow-hidden">
+                    <label>
+                      Company
+                      <input
+                        type="text"
+                        tabIndex={-1}
+                        autoComplete="off"
+                        value={company}
+                        onChange={(e) => setCompany(e.target.value)}
+                      />
+                    </label>
+                  </div>
+
+                  {sendError && (
+                    <p role="alert" className="text-sm text-parchment bg-terracotta/25 border border-terracotta/50 rounded-xl px-4 py-3">
+                      {sendError}
+                    </p>
+                  )}
+
                   <button
                     type="submit"
-                    className="mt-2 w-full px-6 py-3.5 rounded-full bg-brass text-banana font-semibold tracking-wide hover:bg-brass-light transition-colors"
+                    disabled={sending}
+                    className="mt-2 w-full px-6 py-3.5 rounded-full bg-brass text-banana font-semibold tracking-wide hover:bg-brass-light transition-colors disabled:opacity-70 disabled:cursor-wait"
                   >
-                    Submit Enquiry
+                    {sending ? "Sending..." : "Submit Enquiry"}
                   </button>
                 </motion.form>
               )}

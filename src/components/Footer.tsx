@@ -52,8 +52,8 @@ export default function Footer() {
           </div>
           <div className="flex items-center gap-3 text-parchment/70 text-sm lg:text-[15px]">
             <Mail size={18} className="shrink-0 text-brass-light" />
-            <a href="mailto:hello@homelycoventry.co.uk" className="hover:text-brass-light transition-colors">
-              hello@homelycoventry.co.uk
+            <a href="mailto:hello@homelydining.co.uk" className="hover:text-brass-light transition-colors">
+              hello@homelydining.co.uk
             </a>
           </div>
         </div>
