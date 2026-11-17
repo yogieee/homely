@@ -59,14 +59,15 @@ export const PHONE_DISPLAY = "07305 154989";
 export const PHONE_TEL = "+447305154989";
 export const WHATSAPP_URL = "https://wa.me/447305154989";
 export const INSTAGRAM_URL = "https://www.instagram.com/homelydining";
+export const GOOGLE_REVIEWS_URL = "https://g.page/r/CWa0Plkz4wnaEBM/review";
 
-export type SocialPlatform ="facebook" | "instagram" | "tiktok" | "trustpilot";
+export type SocialPlatform = "facebook" | "instagram" | "tiktok" | "google";
 
 export const SOCIAL_LINKS: { platform: SocialPlatform; label: string; href: string }[] = [
   { platform: "facebook", label: "Facebook", href: "https://www.facebook.com/" },
   { platform: "instagram", label: "Instagram", href: INSTAGRAM_URL },
   { platform: "tiktok", label: "TikTok", href: "https://www.tiktok.com/" },
-  { platform: "trustpilot", label: "Trustpilot", href: "https://uk.trustpilot.com/" },
+  { platform: "google", label: "Google Reviews", href: GOOGLE_REVIEWS_URL },
 ];
 
 export const ADDRESS = "135 Walsgrave Rd, Coventry CV2 4HG";
