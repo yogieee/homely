@@ -16,7 +16,7 @@ export const RESTAURANT_JSON_LD = {
   alternateName: "Homely South Indian Fine Dining",
   description: SITE_DESCRIPTION,
   url: SITE_URL,
-  image: [`${SITE_URL}/opengraph-image.jpg`, `${SITE_URL}/images/homely-opened.jpg`],
+  image: [`${SITE_URL}/brand/homely-share.jpg`, `${SITE_URL}/images/homely-opened.jpg`],
   logo: `${SITE_URL}/brand/logo-emblem.png`,
   email: "hello@homelydining.co.uk",
   address: {
