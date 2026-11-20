@@ -11,10 +11,10 @@ export type Enquiry = {
   notes: string;
 };
 
-const SITE_URL = "https://www.homelydining.co.uk";
+export const SITE_URL = "https://www.homelydining.co.uk";
 export const EVENTS_INBOX = "events@homelydining.co.uk";
 
-const C = {
+export const C = {
   mahogany: "#432B26",
   ivory: "#FAF3E8",
   parchment: "#F5E4CD",
@@ -53,7 +53,7 @@ export function parseEnquiry(body: unknown): { error: string } | { enquiry: Enqu
   return { enquiry };
 }
 
-const escape = (s: string) =>
+export const escape = (s: string) =>
   s.replace(/&/g, "&amp;").replace(/</g, "&lt;").replace(/>/g, "&gt;").replace(/"/g, "&quot;").replace(/'/g, "&#39;");
 
 export function formatDate(iso: string) {
@@ -87,7 +87,7 @@ function detailRows(e: Enquiry, withContact: boolean) {
     .join("");
 }
 
-function layout(preheader: string, inner: string) {
+export function layout(preheader: string, inner: string) {
   return `<!doctype html>
 <html lang="en">
 <head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1"><meta name="color-scheme" content="light"></head>

@@ -5,6 +5,7 @@ import { MapPin, Phone, Mail, Clock, Navigation, MessageCircle } from "lucide-re
 import {
   ADDRESS,
   FOODHUB_URL,
+  UBER_EATS_URL,
   MAPS_EMBED,
   MAPS_LINK,
   NAV_LINKS,
@@ -113,7 +114,17 @@ export default function Footer() {
                 rel="noopener noreferrer"
                 className="text-parchment/70 hover:text-brass-light transition-colors"
               >
-                Order via Foodhub
+                Order on Foodhub
+              </a>
+            </li>
+            <li>
+              <a
+                href={UBER_EATS_URL}
+                target="_blank"
+                rel="noopener noreferrer"
+                className="text-parchment/70 hover:text-brass-light transition-colors"
+              >
+                Order on Uber Eats
               </a>
             </li>
           </ul>

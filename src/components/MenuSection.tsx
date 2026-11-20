@@ -3,7 +3,7 @@
 import { useState } from "react";
 import { motion, AnimatePresence } from "framer-motion";
 import { ArrowUpRight, Flame, TriangleAlert } from "lucide-react";
-import { FOODHUB_URL } from "@/lib/data";
+import { FOODHUB_URL, UBER_EATS_URL } from "@/lib/data";
 import { MENU_TABS, formatPrice, type MenuDiet, type MenuEntry } from "@/lib/menu";
 import SectionHeading from "./SectionHeading";
 
@@ -195,18 +195,29 @@ export default function MenuSection() {
           <div>
             <h3 className="font-display text-2xl sm:text-3xl text-parchment">Homely, Delivered</h3>
             <p className="text-parchment/70 mt-1">
-              Our signature dishes, freshly prepared and delivered to your door through Foodhub.
+              Our signature dishes, freshly prepared for delivery or collection through Foodhub or Uber Eats.
             </p>
           </div>
-          <a
-            href={FOODHUB_URL}
-            target="_blank"
-            rel="noopener noreferrer"
-            className="shrink-0 px-7 py-3.5 rounded-full bg-brass text-banana font-semibold tracking-wide hover:bg-brass-light transition-colors flex items-center gap-2"
-          >
-            Order on Foodhub
-            <ArrowUpRight size={18} />
-          </a>
+          <div className="shrink-0 flex flex-col sm:flex-row gap-3">
+            <a
+              href={FOODHUB_URL}
+              target="_blank"
+              rel="noopener noreferrer"
+              className="px-7 py-3.5 rounded-full bg-brass text-banana font-semibold tracking-wide hover:bg-brass-light transition-colors flex items-center justify-center gap-2"
+            >
+              Order on Foodhub
+              <ArrowUpRight size={18} />
+            </a>
+            <a
+              href={UBER_EATS_URL}
+              target="_blank"
+              rel="noopener noreferrer"
+              className="px-7 py-3.5 rounded-full border border-brass text-brass-light font-semibold tracking-wide hover:bg-brass hover:text-banana transition-colors flex items-center justify-center gap-2"
+            >
+              Order on Uber Eats
+              <ArrowUpRight size={18} />
+            </a>
+          </div>
         </motion.div>
       </div>
     </section>

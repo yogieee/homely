@@ -28,6 +28,9 @@ export default function TableBookingModal() {
   const [email, setEmail] = useState("");
   const [phone, setPhone] = useState("");
   const [requests, setRequests] = useState("");
+  const [company, setCompany] = useState("");
+  const [sending, setSending] = useState(false);
+  const [error, setError] = useState("");
 
   const resetAndClose = () => {
     closeBooking();
@@ -40,14 +43,35 @@ export default function TableBookingModal() {
       setEmail("");
       setPhone("");
       setRequests("");
+      setCompany("");
+      setError("");
     }, 300);
   };
 
-  const handleConfirm = (e: FormEvent) => {
+  const handleConfirm = async (e: FormEvent) => {
     e.preventDefault();
-    if (!name || !email || !phone) return;
-    setStep(4);
+    if (!name || !email || !phone || sending) return;
+    setSending(true);
+    setError("");
+    try {
+      const res = await fetch("/api/table-booking", {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({ fullName: name, email, phone, date, time, partySize, requests, company }),
+      });
+      const data = (await res.json().catch(() => null)) as { error?: string } | null;
+      if (!res.ok) throw new Error(data?.error || "We couldn't send your booking. Please call us on 07305 154989.");
+      setStep(4);
+    } catch (err) {
+      setError(err instanceof Error ? err.message : "Something went wrong. Please try again.");
+    } finally {
+      setSending(false);
+    }
   };
+
+  const prettyDate = date
+    ? new Date(`${date}T12:00:00`).toLocaleDateString("en-GB", { weekday: "short", day: "numeric", month: "short" })
+    : "";
 
   return (
     <AnimatePresence>
@@ -242,21 +266,38 @@ export default function TableBookingModal() {
                         rows={2}
                         className="w-full px-4 py-3 rounded-xl bg-parchment/5 border border-parchment/15 text-parchment placeholder:text-parchment/30 text-sm focus:outline-none focus:ring-2 focus:ring-brass/50"
                       />
+                      <input
+                        type="text"
+                        name="company"
+                        tabIndex={-1}
+                        autoComplete="off"
+                        aria-hidden="true"
+                        value={company}
+                        onChange={(e) => setCompany(e.target.value)}
+                        className="hidden"
+                      />
 
                       <div className="rounded-xl bg-parchment/5 border border-parchment/10 p-4 text-sm text-parchment/70 flex flex-col gap-1">
                         <span>
                           Party of <strong className="text-parchment">{partySize}</strong>
                         </span>
                         <span>
-                          {date} at <strong className="text-parchment">{time}</strong>
+                          {prettyDate} at <strong className="text-parchment">{time}</strong>
                         </span>
                       </div>
 
+                      {error && (
+                        <p role="alert" className="text-terracotta text-sm">
+                          {error}
+                        </p>
+                      )}
+
                       <button
                         type="submit"
-                        className="mt-1 w-full px-6 py-3.5 rounded-full bg-brass text-banana font-semibold tracking-wide hover:bg-brass-light transition-colors"
+                        disabled={sending}
+                        className="mt-1 w-full px-6 py-3.5 rounded-full bg-brass text-banana font-semibold tracking-wide hover:bg-brass-light transition-colors disabled:opacity-60 disabled:cursor-wait"
                       >
-                        Confirm Reservation
+                        {sending ? "Booking…" : "Confirm Reservation"}
                       </button>
                     </motion.form>
                   )}
@@ -273,8 +314,8 @@ export default function TableBookingModal() {
                       </span>
                       <h3 className="font-display text-2xl text-parchment">Table Reserved!</h3>
                       <p className="text-parchment/70 max-w-sm">
-                        Thanks, {name.split(" ")[0]}! Your request for a table for {partySize} on {date} at{" "}
-                        {time} is with us. We&apos;ll be in touch at {email} to confirm.
+                        Thanks, {name.split(" ")[0]}! Your table for {partySize === 12 ? "12+" : partySize} on {prettyDate} at{" "}
+                        {time} is booked. We&apos;ve sent the details to {email}.
                       </p>
                       <button
                         onClick={resetAndClose}

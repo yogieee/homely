@@ -13,7 +13,8 @@ export const NAV_LINKS: NavLink[] = [
   { label: "Visit Us", href: "#visit-us" },
 ];
 
-export const FOODHUB_URL = "https://foodhub.co.uk";
+export const FOODHUB_URL = "https://foodhub.co.uk/coventry/mas-flavours/4335510/ordernow";
+export const UBER_EATS_URL = "https://www.ubereats.com/gb/store/homely/GWwdQWu8WoejHPjLhIPPbw";
 
 export type Offer = {
   tag: string;
@@ -48,7 +49,7 @@ export const OFFERS: Offer[] = [
     tag: "Delivery",
     eyebrow: "Order Online",
     title: "Homely at Home",
-    subtitle: "Dosas, biryanis and curries delivered fresh to your door through Foodhub.",
+    subtitle: "Dosas, biryanis and curries delivered fresh to your door or ready to collect. Order on Foodhub or Uber Eats.",
     image: "/images/homely-at-home.jpg",
     alt: "A sizzling platter of tandoori chicken, fish and kebabs on a wooden board, steam rising",
     cta: { label: "Order on Foodhub", href: FOODHUB_URL, external: true },
