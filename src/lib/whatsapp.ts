@@ -1,33 +1,39 @@
 /**
- * WhatsApp alerts to the owner through CallMeBot (https://www.callmebot.com/blog/free-api-whatsapp-messages/).
+ * WhatsApp alerts to the owner through GREEN-API (https://green-api.com/en/docs/api/sending/SendMessage/).
  *
- * The owner activates it once from their own WhatsApp and receives an API key. The alert then
- * arrives from the CallMeBot number. No Meta approval or templates needed.
+ * A WhatsApp account is linked to a GREEN-API instance by scanning its QR code under
+ * WhatsApp > Linked devices. Alerts are sent from that account to the owner's number.
+ * Use a spare number for the sending account: WhatsApp doesn't notify you about
+ * messages you send to yourself.
  *
- * Needs these environment variables. Until both are set, alerts are skipped quietly and the
- * emails still go out:
- *   CALLMEBOT_PHONE   owner's WhatsApp number with country code, e.g. +447305154989
- *   CALLMEBOT_APIKEY  key sent by the CallMeBot bot during activation
+ * Needs these environment variables, all shown in the GREEN-API console. Until they are
+ * all set, alerts are skipped quietly and the emails still go out:
+ *   GREENAPI_URL          the instance's apiUrl, e.g. https://7103.api.greenapi.com
+ *   GREENAPI_INSTANCE_ID  idInstance
+ *   GREENAPI_TOKEN        apiTokenInstance
+ *   OWNER_WHATSAPP_TO     owner's number with country code, digits only, e.g. 447305154989
  */
 
 export async function sendOwnerWhatsApp(message: string): Promise<void> {
-  const phone = process.env.CALLMEBOT_PHONE;
-  const apikey = process.env.CALLMEBOT_APIKEY;
-  if (!phone || !apikey) {
-    console.log("WhatsApp alert skipped: CallMeBot is not configured");
+  const apiUrl = process.env.GREENAPI_URL?.replace(/\/+$/, "");
+  const instance = process.env.GREENAPI_INSTANCE_ID;
+  const token = process.env.GREENAPI_TOKEN;
+  const to = process.env.OWNER_WHATSAPP_TO?.replace(/\D/g, "");
+  if (!apiUrl || !instance || !token || !to) {
+    console.log("WhatsApp alert skipped: GREEN-API is not configured");
     return;
   }
 
-  const url = new URL("https://api.callmebot.com/whatsapp.php");
-  url.searchParams.set("phone", phone);
-  url.searchParams.set("text", message.slice(0, 1500));
-  url.searchParams.set("apikey", apikey);
-
   try {
-    const res = await fetch(url, { signal: AbortSignal.timeout(8000) });
-    const body = await res.text().catch(() => "");
-    if (!res.ok || /error|invalid/i.test(body)) console.error("WhatsApp alert failed", res.status, body.slice(0, 300));
-    else console.log("WhatsApp alert sent");
+    const res = await fetch(`${apiUrl}/waInstance${instance}/sendMessage/${token}`, {
+      method: "POST",
+      headers: { "Content-Type": "application/json" },
+      body: JSON.stringify({ chatId: `${to}@c.us`, message: message.slice(0, 4000), linkPreview: false }),
+      signal: AbortSignal.timeout(8000),
+    });
+    const data = (await res.json().catch(() => null)) as { idMessage?: string } | null;
+    if (!res.ok || !data?.idMessage) console.error("WhatsApp alert failed", res.status, JSON.stringify(data));
+    else console.log("WhatsApp alert sent", data.idMessage);
   } catch (err) {
     console.error("WhatsApp alert request failed", err);
   }
