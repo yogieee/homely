@@ -46,15 +46,15 @@ export async function POST(request: Request) {
         { from: FROM_HOMELY, to: [b.email], reply_to: BOOKINGS_INBOX, ...customer },
       ]),
     }),
-    // Template "table_booking_alert": {{1}} name, {{2}} guests, {{3}} date, {{4}} time, {{5}} phone, {{6}} requests
-    sendOwnerWhatsApp(process.env.WHATSAPP_BOOKING_TEMPLATE || "table_booking_alert", [
-      b.fullName,
-      partyLabel(b.partySize),
-      formatDate(b.date),
-      b.time,
-      b.phone,
-      b.requests || "None",
-    ]),
+    sendOwnerWhatsApp(
+      [
+        "*New table booking*",
+        `${b.fullName}, ${partyLabel(b.partySize)} guests`,
+        `${formatDate(b.date)} at ${b.time}`,
+        `Phone: ${b.phone}`,
+        `Requests: ${b.requests || "None"}`,
+      ].join("\n"),
+    ),
   ]);
 
   const result = (await emailRes.json().catch(() => null)) as { data?: { id: string }[] } | null;

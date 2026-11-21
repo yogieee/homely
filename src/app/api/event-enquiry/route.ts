@@ -39,14 +39,15 @@ export async function POST(request: Request) {
         { from: FROM_EVENTS, to: [enquiry.email], reply_to: EVENTS_INBOX, ...customer },
       ]),
     }),
-    // Template "event_enquiry_alert": {{1}} name, {{2}} occasion, {{3}} guests, {{4}} date, {{5}} phone
-    sendOwnerWhatsApp(process.env.WHATSAPP_EVENT_TEMPLATE || "event_enquiry_alert", [
-      enquiry.fullName,
-      enquiry.occasion,
-      String(enquiry.guestCount),
-      formatDate(enquiry.eventDate),
-      enquiry.phone,
-    ]),
+    sendOwnerWhatsApp(
+      [
+        "*New event hall enquiry*",
+        `${enquiry.fullName}: ${enquiry.occasion}, ${enquiry.guestCount} guests`,
+        `Date: ${formatDate(enquiry.eventDate)}`,
+        `Phone: ${enquiry.phone}`,
+        "Full details are in the events@ inbox.",
+      ].join("\n"),
+    ),
   ]);
 
   const result = (await res.json().catch(() => null)) as { data?: { id: string }[] } | null;

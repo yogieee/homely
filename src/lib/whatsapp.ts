@@ -1,48 +1,34 @@
 /**
- * WhatsApp alerts to the owner through the Meta WhatsApp Cloud API.
+ * WhatsApp alerts to the owner through CallMeBot (https://www.callmebot.com/blog/free-api-whatsapp-messages/).
  *
- * Messages the business starts must use a template that Meta has approved, so each alert
- * names a template and fills its {{1}}, {{2}}, ... placeholders in order.
+ * The owner activates it once from their own WhatsApp and receives an API key. The alert then
+ * arrives from the CallMeBot number. No Meta approval or templates needed.
  *
- * Needs these environment variables. Until they are all set, alerts are skipped quietly
- * and the emails still go out:
- *   WHATSAPP_TOKEN            permanent access token for the WhatsApp Business account
- *   WHATSAPP_PHONE_NUMBER_ID  id of the sending number in Meta's WhatsApp Manager
- *   OWNER_WHATSAPP_TO         owner's number in international format, digits only (e.g. 447305154989)
+ * Needs these environment variables. Until both are set, alerts are skipped quietly and the
+ * emails still go out:
+ *   CALLMEBOT_PHONE   owner's WhatsApp number with country code, e.g. +447305154989
+ *   CALLMEBOT_APIKEY  key sent by the CallMeBot bot during activation
  */
 
-const GRAPH_URL = "https://graph.facebook.com/v21.0";
-
-/** Template text can't hold new lines, tabs or long runs of spaces. */
-const clean = (s: string) => s.replace(/[\r\n\t]+/g, " ").replace(/ {4,}/g, "   ").trim().slice(0, 900) || "-";
-
-export async function sendOwnerWhatsApp(template: string, params: string[]): Promise<void> {
-  const token = process.env.WHATSAPP_TOKEN;
-  const phoneNumberId = process.env.WHATSAPP_PHONE_NUMBER_ID;
-  const to = process.env.OWNER_WHATSAPP_TO;
-  if (!token || !phoneNumberId || !to) {
-    console.log(`WhatsApp alert skipped (${template}): WhatsApp is not configured`);
+export async function sendOwnerWhatsApp(message: string): Promise<void> {
+  const phone = process.env.CALLMEBOT_PHONE;
+  const apikey = process.env.CALLMEBOT_APIKEY;
+  if (!phone || !apikey) {
+    console.log("WhatsApp alert skipped: CallMeBot is not configured");
     return;
   }
 
+  const url = new URL("https://api.callmebot.com/whatsapp.php");
+  url.searchParams.set("phone", phone);
+  url.searchParams.set("text", message.slice(0, 1500));
+  url.searchParams.set("apikey", apikey);
+
   try {
-    const res = await fetch(`${GRAPH_URL}/${phoneNumberId}/messages`, {
-      method: "POST",
-      headers: { Authorization: `Bearer ${token}`, "Content-Type": "application/json" },
-      body: JSON.stringify({
-        messaging_product: "whatsapp",
-        to,
-        type: "template",
-        template: {
-          name: template,
-          language: { code: process.env.WHATSAPP_TEMPLATE_LANG || "en_GB" },
-          components: [{ type: "body", parameters: params.map((text) => ({ type: "text", text: clean(text) })) }],
-        },
-      }),
-    });
-    if (!res.ok) console.error("WhatsApp error", res.status, await res.text().catch(() => ""));
-    else console.log(`WhatsApp alert sent (${template})`);
+    const res = await fetch(url, { signal: AbortSignal.timeout(8000) });
+    const body = await res.text().catch(() => "");
+    if (!res.ok || /error|invalid/i.test(body)) console.error("WhatsApp alert failed", res.status, body.slice(0, 300));
+    else console.log("WhatsApp alert sent");
   } catch (err) {
-    console.error("WhatsApp request failed", err);
+    console.error("WhatsApp alert request failed", err);
   }
 }
