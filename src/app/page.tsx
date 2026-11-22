@@ -7,6 +7,7 @@ import CultureJourney from "@/components/CultureJourney";
 import GallerySection from "@/components/GallerySection";
 import MenuSection from "@/components/MenuSection";
 import EventHallSection from "@/components/EventHallSection";
+import GuestReviews from "@/components/GuestReviews";
 import Footer from "@/components/Footer";
 import TableBookingModal from "@/components/TableBookingModal";
 import Preloader from "@/components/Preloader";
@@ -26,6 +27,7 @@ export default function Home() {
         <CultureJourney />
         <MenuSection />
         <EventHallSection />
+        <GuestReviews />
       </main>
       <Footer />
       <TableBookingModal />
