@@ -29,8 +29,19 @@ To learn more about Next.js, take a look at the following resources:
 
 You can check out [the Next.js GitHub repository](https://github.com/vercel/next.js) - your feedback and contributions are welcome!
 
-## Deploy on Vercel
+## Deploy (Cloudflare)
 
-The easiest way to deploy your Next.js app is to use the [Vercel Platform](https://vercel.com/new?utm_medium=default-template&filter=next.js&utm_source=create-next-app&utm_campaign=create-next-app-readme) from the creators of Next.js.
+The live site, www.homelydining.co.uk, runs on Cloudflare Workers in the restaurant owner's Cloudflare account (set as `account_id` in `wrangler.jsonc`).
 
-Check out our [Next.js deployment documentation](https://nextjs.org/docs/app/building-your-application/deploying) for more details.
+- `next build` makes a static export in `./out`, which Cloudflare serves as plain files.
+- `src/server/worker.ts` handles the only server code: `/api/table-booking` and `/api/event-enquiry` (emails through Resend, owner alerts on WhatsApp through GREEN-API). It also redirects `homelydining.co.uk` and plain http to `https://www.homelydining.co.uk`.
+- Images are served as uploaded (no resizing), so resize photos before adding them.
+
+Deploy with Node 22 or newer (see `.nvmrc`):
+
+```bash
+npm run deploy
+```
+
+Secrets are set in the Cloudflare dashboard (Workers & Pages → homely → Settings → Variables and Secrets) or with `npx wrangler secret put NAME`:
+`RESEND_API_KEY`, `GREENAPI_URL`, `GREENAPI_INSTANCE_ID`, `GREENAPI_TOKEN`, `OWNER_WHATSAPP_TO`.

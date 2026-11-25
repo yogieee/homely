@@ -1,5 +1,5 @@
-import { EVENTS_INBOX, customerEmail, formatDate, parseEnquiry, teamEmail } from "@/lib/enquiry-emails";
-import { sendOwnerWhatsApp } from "@/lib/whatsapp";
+import { EVENTS_INBOX, customerEmail, formatDate, parseEnquiry, teamEmail } from "../lib/enquiry-emails";
+import { sendOwnerWhatsApp } from "../lib/whatsapp";
 
 const FROM_WEBSITE = "Homely Website <website@homelydining.co.uk>";
 const FROM_EVENTS = `Homely Events <${EVENTS_INBOX}>`;

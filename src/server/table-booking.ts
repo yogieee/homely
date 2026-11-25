@@ -4,9 +4,9 @@ import {
   ownerBookingEmail,
   parseBooking,
   partyLabel,
-} from "@/lib/booking-emails";
-import { formatDate } from "@/lib/enquiry-emails";
-import { sendOwnerWhatsApp } from "@/lib/whatsapp";
+} from "../lib/booking-emails";
+import { formatDate } from "../lib/enquiry-emails";
+import { sendOwnerWhatsApp } from "../lib/whatsapp";
 
 const FROM_WEBSITE = "Homely Website <website@homelydining.co.uk>";
 const FROM_HOMELY = `Homely <${BOOKINGS_INBOX}>`;

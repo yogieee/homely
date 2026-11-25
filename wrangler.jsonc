@@ -1,0 +1,27 @@
+// Cloudflare: static export in ./out, plus src/server/worker.ts for /api/*.
+// Deploy with `npm run deploy`. Secrets: `npx wrangler secret put RESEND_API_KEY` etc.
+{
+  "$schema": "node_modules/wrangler/config-schema.json",
+  "name": "homely",
+  // The restaurant owner's Cloudflare account, which also holds homelydining.co.uk.
+  "account_id": "0d99400c62f33eb2c4cd152f486bc315",
+  "main": "src/server/worker.ts",
+  "compatibility_date": "2026-11-23",
+  // Lets the existing code read secrets through process.env.
+  "compatibility_flags": ["nodejs_compat"],
+  "assets": {
+    "directory": "./out",
+    "binding": "ASSETS",
+    // The worker sees page requests (for the www redirect) and /api/*.
+    // Static files skip it, so they don't count against the request quota.
+    "run_worker_first": ["/*", "!/_next/*", "!/images/*", "!/gallery/*", "!/brand/*", "!/video/*", "!/audio/*"],
+    "html_handling": "auto-trailing-slash",
+    "not_found_handling": "404-page"
+  },
+  "workers_dev": true,
+  "routes": [
+    { "pattern": "www.homelydining.co.uk", "custom_domain": true },
+    { "pattern": "homelydining.co.uk", "custom_domain": true }
+  ],
+  "observability": { "enabled": true }
+}
